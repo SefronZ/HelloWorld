@@ -17,14 +17,29 @@ Mejorando las consultas a servidores
 +++
 @title[GFM]
 
-#### Use GitHub Flavored Markdown
-#### For Slide Content Creation
+#### JSon vs GraphQL
 
-<br>
+```{
+	"query": "mutation updateAuthor($lastName: String!, $firstName: String!, $id: ID) {  updateAuthor(lastName: $lastName, firstName: $firstName, id: $id) {   firstName    id    lastName  }}",
+	"variables": {
+		"lastName": “Nombre",
+		"firstName": “Apellido",
+		"id": “1"
+	}
+}
 
-The *same syntax* you use to create project   
-**READMEs** and **Wikis** for your Git repos.
+mutation{
+  	updateAuthor(
+    		id: 1
+    		firstName: “Nombre"
+    		lastName: “Apellido"
+ 	 ){
+    		id
+ 	 }
+}```
 
+@[1,2,10,11]
+@[3-6,12-14]
 ---
 
 ![Flux Explained](https://facebook.github.io/flux/img/flux-simple-f8-diagram-explained-1300w.png)  ### Flux Design
