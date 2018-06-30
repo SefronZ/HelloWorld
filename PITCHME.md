@@ -5,19 +5,16 @@ Mejorando las consultas a servidores
 
 ---
 
-### Flux Design
+### Rest vs GraphQL
 
-- Dispatcher: Manages Data Flow
-- Stores: Handle State & Logic
-- Views: Render Data via React
-  -  hola
+![Image-Absolute](https://cdn-images-1.medium.com/max/1618/1*f_XvFD7FvliMM74WHJ0vRQ.png)
   
 @fa[arrow-down]
 
 +++
 @title[GFM]
 
-#### JSon vs GraphQL
+#### Estructura consulta
 
 ```
 {
