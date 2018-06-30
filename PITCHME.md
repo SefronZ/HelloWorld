@@ -23,9 +23,9 @@ Mejorando las consultas a servidores
 {
 	"query": "mutation updateAuthor($lastName: String!, $firstName: String!, $id: ID) {  updateAuthor(lastName: $lastName, firstName: $firstName, id: $id) {   firstName    id    lastName  }}",
 	"variables": {
-		"lastName": “Nombre",
-		"firstName": “Apellido",
-		"id": “1"
+		"id": “1",
+		"firstName": “Nombre",
+		"lastName": “Apellido"
 	}
 }
 
