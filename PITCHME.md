@@ -7,7 +7,7 @@ Mejorando las consultas a servidores
 
 ### Rest vs GraphQL
 
-![Image-Absolute](https://cdn-images-1.medium.com/max/800/1*f_XvFD7FvliMM74WHJ0vRQ.png)
+![Image-Absolute](https://cdn-images-1.medium.com/max/600/1*f_XvFD7FvliMM74WHJ0vRQ.png)
   
 @fa[arrow-down]
 
