@@ -40,8 +40,9 @@ mutation{
 }
 ```
 
-@[2-3,10-11] Tipo de consulta y datos
-@[4-7,12-14] Valores a ingresar
+@[2-3,10-11] (Tipo de consulta y datos)
+@[4-6,12-14] (Valores a ingresar)
+
 ---
 
 ![Flux Explained](https://facebook.github.io/flux/img/flux-simple-f8-diagram-explained-1300w.png)  ### Flux Design
