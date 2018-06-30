@@ -19,7 +19,8 @@ Mejorando las consultas a servidores
 
 #### JSon vs GraphQL
 
-```{
+```
+{
 	"query": "mutation updateAuthor($lastName: String!, $firstName: String!, $id: ID) {  updateAuthor(lastName: $lastName, firstName: $firstName, id: $id) {   firstName    id    lastName  }}",
 	"variables": {
 		"lastName": “Nombre",
@@ -36,7 +37,8 @@ mutation{
  	 ){
     		id
  	 }
-}```
+}
+```
 
 @[1,2,19,10] Tipo de consulta y datos
 @[3-6,11-13] Valores a ingresar
