@@ -14,7 +14,7 @@ Mejorando las consultas a servidores
 +++
 @title[GFM]
 
-### Estructura consulta
+#### Estructura consulta
 
 ```
 {
@@ -86,7 +86,8 @@ type Mutation {
 
 ---
 
-### Entidades y Esquemas con SPQR e Hibernate
+### BackEnd
+#### Entidades y Esquemas con SPQR e Hibernate
 
 +++
 #### Construccion entidad
@@ -242,3 +243,90 @@ public class ColoresClasesMutation {
 @[19-24] (Eliminacion de datos)
 @[26-39] (Modificacion de datos)
 @[1-40]
+
++++
+#### Controlador
+```
+@RestController
+public class GraphQLController {
+	
+    private static final Logger LOGGER = LoggerFactory.getLogger(GraphQLController.class);
+
+    private final GraphQL graphQL;
+
+    // Este metodo se encarga de la creacion de las Querys y Mutations del esquema
+    @Autowired
+    public GraphQLController(ColoresClasesQuery coloresClasesQuery,
+    								ColoresClasesMutation coloresClasesMutation) {
+
+        //Schema generated from query classes
+        GraphQLSchema schema = new GraphQLSchemaGenerator()
+                .withResolverBuilders(
+                        new AnnotatedResolverBuilder())
+                .withOperationsFromSingleton(coloresClasesQuery)
+                .withOperationsFromSingleton(coloresClasesMutation)
+                /** Traduce los metodos en sentencias de GraphQL */
+                .withValueMapperFactory(new JacksonValueMapperFactory())
+                .generate();
+        graphQL = GraphQL.newGraphQL(schema).build();
+
+        LOGGER.info("Generated GraphQL schema using SPQR");
+    }
+
+    @PostMapping(value = "/graphql", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ResponseBody
+    public Map<String, Object> indexFromAnnotated(@RequestBody Map<String, Object> request, HttpServletRequest raw) {
+        ExecutionResult executionResult = graphQL.execute(ExecutionInput.newExecutionInput()
+                .query((String) request.get("query"))
+                .operationName((String) request.get("operationName"))
+                .variables((Map<String, Object>) request.get("variables"))
+                .context(raw)
+                .build());
+        LOGGER.info(executionResult.toSpecification().toString());
+        return executionResult.toSpecification();
+    }
+}
+```
+
+@[1,9] (Notacion Spring)
+@[10-25] (Generacion de Esquema)
+@[27-39] ("Mapeo" de respuesta)
+
++++
+#### Conexion
+```
+spring:
+    jpa:
+        database: POSTGRESQL
+        show-sql: true
+        hibernate.ddl-auto: update
+    datasource:
+        platform: postgres
+        url: jdbc:postgresql://localhost:5432/graphqltest
+        username: desarrollo5
+        password: Admin2018    
+        driverClassName: org.postgresql.Driver
+
+server:
+    port: 8080
+    
+logging:
+    level:
+      org.hibernate.engine.jdbc.env.internal.LobCreatorBuilderImpl: ERROR
+```
+
++++
+#### MainApplication
+```
+@SpringBootApplication
+public class BdHorarioApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(BdHorarioApplication.class, args);
+	}
+}
+```
+
+---
+
+### FrontEnd
