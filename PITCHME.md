@@ -89,7 +89,7 @@ type Mutation {
 ### Entidades y Esquemas con SPQR e Hibernate
 
 +++
-#### Entidad
+#### Construccion entidad
 ```
 @Entity
 public class ColoresClases {
@@ -116,8 +116,10 @@ public class ColoresClases {
 	}
 ```
 @[1,4-5] (Notaciones Hibernate)
+@[1-21]
 
 +++
+#### Manejo de datos en la entidad
 ```
 @GraphQLId
 	@GraphQLNonNull
@@ -142,6 +144,7 @@ public class ColoresClases {
 ```
 
 @[1-3,12-13] (Notaciones SPQR)
+@[1-19]
 
 +++
 #### Repositorio
@@ -186,6 +189,7 @@ public class ColoresClasesQuery {
 
 @[1,4] (Notaciones Spring)
 @[7,15-16,21] (Notaciones SPQR)
+@[1-24]
 
 +++
 #### Mutaciones
@@ -236,4 +240,5 @@ public class ColoresClasesMutation {
 @[7-10,19-20,26-29] (Notaciones SPQR)
 @[7-17] (Ingreso de datos)
 @[19-24] (Eliminacion de datos)
-@[26-40] (Modificacion de datos)
+@[26-39] (Modificacion de datos)
+@[1-40]
