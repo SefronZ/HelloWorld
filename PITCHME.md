@@ -340,8 +340,8 @@ public class BdHorarioApplication {
 +++
 ### Librerias
 
- - <span style="font-size:0.6em; color:gray">Gradle Projecto: classpath 'com.apollographql.apollo:apollo-gradle-plugin:0.5.0'</span> |
- - <span style="font-size:0.6em; color:gray">Gradle Android: implementation 'com.apollographql.apollo:apollo-runtime:0.5.0'</span> |
+<span style="font-size:0.6em;"> - Gradle Projecto: classpath 'com.apollographql.apollo:apollo-gradle-plugin:0.5.0'</span> |
+<span style="font-size:0.6em;"> - Gradle Android: implementation 'com.apollographql.apollo:apollo-runtime:0.5.0'</span> |
 
 ---
 
