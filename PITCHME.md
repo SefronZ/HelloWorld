@@ -14,7 +14,7 @@ Mejorando las consultas a servidores
 +++
 @title[GFM]
 
-#### Estructura consulta
+### Estructura consulta
 
 ```
 {
@@ -42,4 +42,37 @@ mutation{
 
 ---
 
-![Flux Explained](https://facebook.github.io/flux/img/flux-simple-f8-diagram-explained-1300w.png)  ### Flux Design
+### Schema
+
+```
+type Article {
+    id: Int!
+    title: String!
+    text: String!
+    author: Profile!
+    comments: [Comment]
+}
+
+type Profile {
+    id: Int!
+    username: String!
+    bio: String
+    articles: [Article!]
+}
+
+type Comment {
+    id: Int!
+    text: String!
+    author: Profile!
+}
+
+type Query{
+	articles: [Article]
+    profiles: [Profile]
+    comments: [Comment]
+    article(id: Int!): Article
+}
+```
+@[1,9,16] (Se define la entidad)
+@[2-5,10-11,17-18] (Se definen los campos)
+@[6] (Se define la relacion)
