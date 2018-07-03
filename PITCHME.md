@@ -8,7 +8,7 @@ Mejorando las consultas a servidores
 ### Rest vs GraphQL
 
 ![Image-Absolute](https://cdn-images-1.medium.com/max/600/1*f_XvFD7FvliMM74WHJ0vRQ.png)
-  
+
 @fa[arrow-down]
 
 +++
@@ -316,7 +316,7 @@ logging:
 ```
 
 +++
-#### MainApplication
+#### Main Application
 ```
 @SpringBootApplication
 public class BdHorarioApplication {
@@ -330,3 +330,94 @@ public class BdHorarioApplication {
 ---
 
 ### FrontEnd
+#### GraphQL en Android
+
++++
+### Apollo Android
+
+![Image-Absolute](https://cdn-images-1.medium.com/max/2000/1*-IFErNUtG6-6e_Fb2u0teA.png)
+
++++
+### Librerias
+
+Gradle Projecto: classpath 'com.apollographql.apollo:apollo-gradle-plugin:0.5.0'
+Gradle Android: implementation 'com.apollographql.apollo:apollo-runtime:0.5.0' |
+
+---
+
+#### Controlador
+```
+@Override public void onCreate() {
+        super.onCreate();
+        ApolloDemoApplication.context = getApplicationContext();
+
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .addNetworkInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+                .build();
+
+        NormalizedCacheFactory cacheFactory = new LruNormalizedCacheFactory(EvictionPolicy.builder().maxSizeBytes(10 * 1024).build());
+        CacheKeyResolver cacheKeyResolver = new CacheKeyResolver() {
+            @Nonnull
+            @Override
+            public CacheKey fromFieldRecordSet(@Nonnull ResponseField field, @Nonnull Map<String, Object> recordSet) {
+                if (recordSet.containsKey("id")) {
+                    String id = (String) recordSet.get("id");
+                    return CacheKey.from(id);
+                }
+                return CacheKey.NO_KEY;
+            }
+
+            @Nonnull @Override
+            public CacheKey fromFieldArguments(@Nonnull ResponseField field, @Nonnull Operation.Variables variables) {
+                return CacheKey.NO_KEY;
+            }
+        };
+
+        apolloClient = ApolloClient.builder()
+                .serverUrl(BASE_URL)
+                .normalizedCache(cacheFactory, cacheKeyResolver)
+                .okHttpClient(okHttpClient)
+                .build();
+    }
+```
+@[5-7] (OkHttp)
+@[9-25] (Especificando los parametros)
+@[27-32] (Creando apolloClient)
+@[1-32]
+
+---
+
+### Consultas
+
++++
+
+```
+public static void createAuthor(String firstname, String lastname) {
+        application.apolloClient().mutate(
+                CreateAuthorMutation.builder()
+                        .firstName(firstname)
+                        .lastName(lastname)
+                        .build())
+                .enqueue(createAuthorMutationCallback);
+}
+```
+
+Preparacion de Query
+
++++
+
+```
+private static ApolloCall.Callback<CreateAuthorMutation.Data> createAuthorMutationCallback = new ApolloCall.Callback<CreateAuthorMutation.Data>() {
+        @Override
+        public void onResponse(@Nonnull final Response<CreateAuthorMutation.Data> dataResponse) {
+            Log.d(ApolloDemoApplication.TAG, "Executed mutation: " + dataResponse.data().createAuthor().toString());
+            mainActivity.fetchAuthors();
+        }
+        @Override
+        public void onFailure(@Nonnull ApolloException e) {
+            Log.d(ApolloDemoApplication.TAG, "Error:" + e.toString());
+        }
+    };
+```
+
+Respuesta
