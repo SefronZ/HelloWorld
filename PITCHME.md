@@ -46,7 +46,7 @@ mutation{
 
 ```
 type Article {
-    id: Int!
+    id: ID!
     title: String!
     text: String!
     author: Profile!
@@ -54,14 +54,14 @@ type Article {
 }
 
 type Profile {
-    id: Int!
+    id: ID!
     username: String!
     bio: String
     articles: [Article!]
 }
 
 type Comment {
-    id: Int!
+    id: ID!
     text: String!
     author: Profile!
 }
@@ -70,9 +70,16 @@ type Query{
 	articles: [Article]
     profiles: [Profile]
     comments: [Comment]
-    article(id: Int!): Article
+    article(id: ID!): Article
+}
+
+type Mutation {
+	createArticle(title: String!, text: String!, author: Profile!, comments: [Comment]): Article!
+	deleteArticle(id: ID!): Boolean
 }
 ```
-@[1,9,16] (Se define la entidad)
-@[2-5,10-11,17-18] (Se definen los campos)
-@[6] (Se define la relacion)
+@[1,9,16] (Se definen las entidades)
+@[2-4,10-12,17-18] (Se definen los campos)
+@[5-6,13,19] (Se definen las relaciones)
+@[22-27] (Se definen las consultas)
+@[29-32] (Se definen las mutaciones]
