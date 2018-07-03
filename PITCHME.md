@@ -340,8 +340,8 @@ public class BdHorarioApplication {
 +++
 ### Librerias
 
-<span style="font-size:0.6em;"> - Gradle Projecto: classpath 'com.apollographql.apollo:apollo-gradle-plugin:0.5.0'</span> |
-<span style="font-size:0.6em;"> - Gradle Android: implementation 'com.apollographql.apollo:apollo-runtime:0.5.0'</span> |
+ - <span style="font-size:0.6em;">Gradle Projecto: classpath 'com.apollographql.apollo:apollo-gradle-plugin:0.5.0'</span> |
+ - <span style="font-size:0.6em;">Gradle Android: implementation 'com.apollographql.apollo:apollo-runtime:0.5.0'</span> |
 
 ---
 
@@ -421,3 +421,17 @@ private static ApolloCall.Callback<CreateAuthorMutation.Data> createAuthorMutati
 ```
 
 Respuesta
+
+---
+
+### Generacion Esquema
+#### Cliente Android
+
++++
+#### Obtencion esquema formato GraphQL y JSon
+
+
+ - <span style="font-size:0.6em;">fetch-graphql-schema http://192.168.1.105:8080/graphql -o schema.graphql -r</span> |
+ - <span style="font-size:0.6em;">fetch-graphql-schema http://192.168.1.105:8080/graphql -o schema.json</span> |
+ - <span style="font-size:0.6em;">gqlg --schemaFilePath ./Origen.graphql --destDirPath ./carpetaDestino</span> |
+ - <span style="font-size:0.6em;">Ruta: app/src/main/graphql/com</span> |
