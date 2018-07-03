@@ -101,7 +101,7 @@ public class ColoresClases {
 	private int numeroColor;
 	
 	public ColoresClases() {
-		
+	
 	}
 	
 	public ColoresClases(Integer id) {
@@ -152,8 +152,8 @@ public interface ColoresClasesRepo extends CrudRepository<ColoresClases, Integer
 
 @[1] (Notacion Spring)
 
-### Consultas
 +++
+#### Consultas
 ```
 @Service
 public class ColoresClasesQuery {
@@ -179,7 +179,59 @@ public class ColoresClasesQuery {
 	public Long contarColoresClases() {
 		return clasesRepo.count();
 	}
+}
 ```
 
-@[1,4] (Notacion Spring)
-@[7,15-16,21] (Notacion SPQR)
+@[1,4] (Notaciones Spring)
+@[7,15-16,21] (Notaciones SPQR)
+
++++
+#### Mutaciones
+```
+@Service
+public class ColoresClasesMutation {
+	
+	@Autowired
+	ColoresClasesRepo clasesRepo;
+	
+	@GraphQLNonNull
+	@GraphQLMutation(name = "registrarColor")
+    public ColoresClases registrarColor(@GraphQLNonNull @GraphQLArgument(name = "detalleColor") String detalleColor,
+    								@GraphQLNonNull @GraphQLArgument(name = "numeroColor") int numeroColor){
+		ColoresClases colorNuevo = new ColoresClases();
+		colorNuevo.setDetalleColor(detalleColor);
+		colorNuevo.setNumeroColor(numeroColor);
+		
+		clasesRepo.save(colorNuevo);
+        return colorNuevo;
+    }
+	
+	@GraphQLMutation(name = "borrarColor")
+	public boolean borrarColor(@GraphQLId @GraphQLArgument(name = "id") Integer id) {		
+		
+		clasesRepo.deleteById(id);
+		return true;
+	}
+	
+	@GraphQLMutation(name = "modificarColor")
+	public ColoresClases modificarColor(@GraphQLNonNull @GraphQLArgument(name = "detalleColor") String detalleColor, 
+								@GraphQLNonNull @GraphQLArgument(name = "numeroColor") int numeroColor, 
+								@GraphQLId @GraphQLArgument(name = "id") Integer id) {
+		
+		ColoresClases coloresClases = clasesRepo.findById(id).orElse(null);
+		
+		coloresClases.setDetalleColor(detalleColor);
+		coloresClases.setNumeroColor(numeroColor);
+		
+		clasesRepo.save(coloresClases);
+		
+    return coloresClases;
+	}
+}
+```
+
+@[1,4] (Notaciones Spring)
+@[7-10,19-20,26-29] (Notaciones SPQR)
+@[7-17] (Ingreso de datos)
+@[19-24] (Eliminacion de datos)
+@[26-40] (Modificacion de datos)
