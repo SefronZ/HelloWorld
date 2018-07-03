@@ -113,9 +113,9 @@ public class ColoresClases {
 		this.numeroColor = numeroColor;
 	}
 ```
-
 @[1,4-5] (Notaciones Hibernate)
 
++++
 ```
 @GraphQLId
 	@GraphQLNonNull
