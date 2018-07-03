@@ -88,6 +88,8 @@ type Mutation {
 
 ### Entidades y Esquemas con SPQR e Hibernate
 
++++
+#### Entidad
 ```
 @Entity
 public class ColoresClases {
