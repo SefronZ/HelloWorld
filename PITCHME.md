@@ -149,3 +149,37 @@ public interface ColoresClasesRepo extends CrudRepository<ColoresClases, Integer
 
 }
 ```
+
+@[1] (Notacion Spring)
+
+### Consultas
++++
+```
+@Service
+public class ColoresClasesQuery {
+	
+	@Autowired
+	ColoresClasesRepo clasesRepo;
+	
+	@GraphQLQuery(name = "obtenerColoresClases")
+    public List<ColoresClases> obtenerColoresClases() {
+		List<ColoresClases> list = new ArrayList<ColoresClases>();
+		list = (List<ColoresClases>) clasesRepo.findAll();
+		list = bubbleSort(list);
+		return list;
+	}
+	
+	@GraphQLQuery(name = "obtenerColorClasePorId")
+	public Optional<ColoresClases> getById(@GraphQLNonNull @GraphQLArgument(name="id") Integer id) {
+		Optional<ColoresClases> author = clasesRepo.findById(id);
+		return author;
+	}
+	
+	@GraphQLQuery(name = "contarColoresClases")
+	public Long contarColoresClases() {
+		return clasesRepo.count();
+	}
+```
+
+@[1,4] (Notacion Spring)
+@[7,15-16,21] (Notacion SPQR)
