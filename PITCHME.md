@@ -140,3 +140,12 @@ public class ColoresClases {
 ```
 
 @[1-3,12-13] (Notaciones SPQR)
+
++++
+#### Repositorio
+```
+@Repository
+public interface ColoresClasesRepo extends CrudRepository<ColoresClases, Integer>{
+
+}
+```
