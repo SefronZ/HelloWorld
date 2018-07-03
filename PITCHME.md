@@ -42,7 +42,7 @@ mutation{
 
 ---
 
-### Schema
+### Esquema
 
 ```
 type Article {
@@ -82,4 +82,61 @@ type Mutation {
 @[2-4,10-12,17-18] (Se definen los campos)
 @[5-6,13,19] (Se definen las relaciones)
 @[22-27] (Se definen las consultas)
-@[29-32] (Se definen las mutaciones]
+@[29-32] (Se definen las mutaciones)
+
+---
+
+### Entidades y Esquemas con SPQR e Hibernate
+
+```
+@Entity
+public class ColoresClases {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
+	
+	private String detalleColor;
+	
+	private int numeroColor;
+	
+	public ColoresClases() {
+		
+	}
+	
+	public ColoresClases(Integer id) {
+		this.id = id;
+	}
+	
+	public ColoresClases(String detalleColor, int numeroColor) {
+		this.detalleColor = detalleColor;
+		this.numeroColor = numeroColor;
+	}
+```
+
+@[1,4-5] (Notaciones Hibernate)
+
+```
+@GraphQLId
+	@GraphQLNonNull
+	@GraphQLQuery(name = "id")
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	@GraphQLNonNull
+	@GraphQLQuery(name = "detalleColor")
+	public String getDetalleColor() {
+		return detalleColor;
+	}
+
+	public void setDetalleColor(String detalleColor) {
+		this.detalleColor = detalleColor;
+	}
+```
+
+@[1-3,12-13] (Notaciones SPQR)
